@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adhithya J</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0f; }
+    ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+
+    a { text-decoration: none; color: inherit; }
+
+    .glow { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .glow-1 { width: 400px; height: 400px; background: rgba(99,102,241,0.08); top: -100px; left: -100px; }
+    .glow-2 { width: 500px; height: 500px; background: rgba(168,85,247,0.06); bottom: -150px; right: -100px; }
+    .glow-3 { width: 300px; height: 300px; background: rgba(236,72,153,0.05); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    section { position: relative; z-index: 1; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,10,15,0.6); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    nav .logo { font-weight: 800; font-size: 1.3rem; color: #fff; letter-spacing: -0.5px; }
+    nav .logo span { color: #818cf8; }
+    nav .nav-links { display: flex; gap: 2rem; list-style: none; }
+    nav .nav-links a {
+      color: #888; font-size: 0.85rem; font-weight: 500;
+      transition: color 0.3s; letter-spacing: 0.3px;
+    }
+    nav .nav-links a:hover { color: #fff; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: 0.3s; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; padding-top: 80px;
+    }
+    .hero-content { max-width: 720px; }
+    .hero-badge {
+      display: inline-block; padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+      color: #818cf8; margin-bottom: 1.5rem; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 900; line-height: 1.05;
+      color: #fff; margin-bottom: 1.2rem;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #818cf8, #a855f7, #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.05rem; color: #888; line-height: 1.7; margin-bottom: 2rem;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+      min-height: 3.4rem;
+    }
+    .cursor { display: inline-block; width: 2px; height: 1.2em; background: #818cf8; margin-left: 2px; vertical-align: text-bottom; animation: blink 0.8s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      color: #fff;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.3); }
+    .btn-secondary {
+      background: transparent; color: #ccc;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+
+    .section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: #818cf8; margin-bottom: 0.8rem;
+    }
+    .section h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: #fff;
+      margin-bottom: 1rem;
+    }
+    .section > .subtitle { color: #888; font-size: 1rem; line-height: 1.6; max-width: 500px; margin-bottom: 3.5rem; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .about-card {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px; padding: 2rem; transition: all 0.3s;
+    }
+    .about-card:hover { border-color: rgba(99,102,241,0.15); transform: translateY(-3px); }
+    .about-card .icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+    .about-card h3 { color: #fff; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; }
+    .about-card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; }
+    .stat-card {
+      text-align: center; padding: 2rem 1rem;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px; transition: all 0.3s;
+    }
+    .stat-card:hover { border-color: rgba(99,102,241,0.15); transform: translateY(-3px); }
+    .stat-number {
+      font-size: 2.2rem; font-weight: 800; color: #fff;
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.8rem; color: #666; margin-top: 0.3rem; }
+
+    /* GitHub Spotlight */
+    .github-spotlight {
+      background: rgba(99,102,241,0.03); border: 1px solid rgba(99,102,241,0.1);
+      border-radius: 20px; padding: 3rem; display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .github-spotlight .gh-icon {
+      font-size: 4rem; flex-shrink: 0;
+      width: 80px; height: 80px; border-radius: 20px;
+      background: rgba(99,102,241,0.1); display: flex; align-items: center; justify-content: center;
+    }
+    .github-spotlight .gh-text { flex: 1; min-width: 200px; }
+    .github-spotlight .gh-text h3 { color: #fff; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .github-spotlight .gh-text p { color: #888; font-size: 0.9rem; line-height: 1.6; }
+    .github-spotlight .gh-text .gh-username {
+      display: inline-block; margin-top: 0.8rem;
+      padding: 0.4rem 1rem; border-radius: 8px;
+      background: rgba(99,102,241,0.1); color: #818cf8;
+      font-size: 0.85rem; font-weight: 600; font-family: monospace;
+      border: 1px solid rgba(99,102,241,0.2);
+    }
+    .github-spotlight .gh-btn { flex-shrink: 0; }
+
+    /* Discord Spotlight */
+    .discord-spotlight {
+      background: rgba(88,101,242,0.04); border: 1px solid rgba(88,101,242,0.12);
+      border-radius: 20px; padding: 3rem; display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .discord-spotlight .dc-icon {
+      font-size: 4rem; flex-shrink: 0;
+      width: 80px; height: 80px; border-radius: 20px;
+      background: rgba(88,101,242,0.1); display: flex; align-items: center; justify-content: center;
+    }
+    .discord-spotlight .dc-text { flex: 1; min-width: 200px; }
+    .discord-spotlight .dc-text h3 { color: #fff; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .discord-spotlight .dc-text p { color: #888; font-size: 0.9rem; line-height: 1.6; }
+    .discord-spotlight .dc-text .dc-username {
+      display: inline-block; margin-top: 0.8rem;
+      padding: 0.4rem 1rem; border-radius: 8px;
+      background: rgba(88,101,242,0.1); color: #5865f2;
+      font-size: 0.85rem; font-weight: 600; font-family: monospace;
+      border: 1px solid rgba(88,101,242,0.2);
+    }
+    .discord-spotlight .dc-btn { flex-shrink: 0; }
+
+    .connect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+    /* Testimonials */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px; padding: 1.8rem; transition: all 0.3s;
+    }
+    .testimonial-card:hover { border-color: rgba(99,102,241,0.12); }
+    .testimonial-card p { color: #aaa; font-size: 0.9rem; line-height: 1.7; font-style: italic; margin-bottom: 1.2rem; }
+    .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testimonial-author .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.8rem; color: #fff;
+    }
+    .testimonial-author .name { font-weight: 600; font-size: 0.85rem; color: #fff; }
+    .testimonial-author .handle { font-size: 0.75rem; color: #666; }
+
+    /* Contact */
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-info h3 { color: #fff; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.8rem; }
+    .contact-info p { color: #888; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .contact-info .social-links { display: flex; gap: 1rem; }
+    .contact-info .social-links a {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none; color: #888; font-size: 1.3rem; transition: all 0.3s;
+    }
+    .contact-info .social-links a:hover { color: #fff; border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.1); transform: translateY(-2px); }
+
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    form input, form textarea {
+      padding: 1rem 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03); color: #e0e0e0; font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; outline: none; transition: all 0.3s;
+    }
+    form input:focus, form textarea:focus { border-color: rgba(99,102,241,0.3); background: rgba(255,255,255,0.05); }
+    form textarea { min-height: 120px; resize: vertical; }
+    form .btn { align-self: flex-start; }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: #555; font-size: 0.8rem;
+    }
+    footer .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    footer .footer-links a {
+      color: #666; font-size: 0.85rem; transition: color 0.3s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    footer .footer-links a:hover { color: #818cf8; }
+    footer .footer-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 500; margin: 0.3rem 0.5rem;
+    }
+    footer .footer-badge.gh { background: rgba(99,102,241,0.08); color: #818cf8; border: 1px solid rgba(99,102,241,0.15); }
+    footer .footer-badge.dc { background: rgba(88,101,242,0.08); color: #5865f2; border: 1px solid rgba(88,101,242,0.15); }
+    footer .footer-badge.ig { background: rgba(236,72,153,0.08); color: #ec4899; border: 1px solid rgba(236,72,153,0.15); }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10,10,15,0.95); backdrop-filter: blur(12px); padding: 1rem 2rem; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      nav .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .connect-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 1.5rem; }
+      .github-spotlight, .discord-spotlight { padding: 2rem; text-align: center; justify-content: center; }
+    }
+    @media (min-width: 769px) { nav .nav-links { display: flex !important; } }
+
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; background: rgba(99,102,241,0.3);
+      border-radius: 50%; animation: float linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      padding: 1rem 1.5rem; border-radius: 12px;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2);
+      color: #22c55e; font-size: 0.9rem; font-weight: 500;
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+<div class="particles" id="particles"></div>
+<div class="toast" id="toast">Message sent successfully!</div>
+
+<nav>
+  <div class="logo">Adhithya<span>.</span>J</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="closeNav()">About</a></li>
+    <li><a href="#connect" onclick="closeNav()">Connect</a></li>
+    <li><a href="#testimonials" onclick="closeNav()">Testimonials</a></li>
+    <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Welcome to my space</div>
+    <h1>Hey, I'm <span class="highlight">Adhithya J</span></h1>
+    <p id="typing-text"><span></span><span class="cursor"></span></p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="https://www.instagram.com/_.itz_adhithya._/" target="_blank" class="btn btn-secondary">Follow on IG</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="reveal">
+    <div class="section-label">About</div>
+    <h2>Who I Am</h2>
+    <p class="subtitle">A quick glimpse into what I do and what I'm about.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card reveal">
+      <span class="icon">🎮</span>
+      <h3>Gaming</h3>
+      <p>From casual sessions to grinding ranked — gaming is where I unwind and connect. Always down for a good squad.</p>
+    </div>
+    <div class="about-card reveal">
+      <span class="icon">💻</span>
+      <h3>Development</h3>
+      <p>I code stuff. Web, tools, automation — if it's interesting and challenging, I'm in. Turning ideas into reality one line at a time.</p>
+    </div>
+    <div class="about-card reveal">
+      <span class="icon">📸</span>
+      <h3>Content</h3>
+      <p>I share my journey, thoughts, and moments on Instagram. A mix of lifestyle, gaming clips, and behind-the-scenes.</p>
+    </div>
+    <div class="about-card reveal">
+      <span class="icon">🔥</span>
+      <h3>The Vibe</h3>
+      <p>No filters, no fluff. Just real energy, honest opinions, and a drive to keep leveling up in everything I do.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">By the Numbers</div>
+    <h2>Stats</h2>
+    <p class="subtitle">Some milestones and numbers that define my journey.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card reveal"><div class="stat-number" data-target="12">0</div><div class="stat-label">Projects Built</div></div>
+    <div class="stat-card reveal"><div class="stat-number" data-target="500">0</div><div class="stat-label">Github Contributions</div></div>
+    <div class="stat-card reveal"><div class="stat-number" data-target="50">0</div><div class="stat-label">Games Played</div></div>
+    <div class="stat-card reveal"><div class="stat-number" data-target="100">0</div><div class="stat-label">Late Night Coding Sessions</div></div>
+  </div>
+</section>
+
+<section class="section" id="connect">
+  <div class="reveal">
+    <div class="section-label">Connect</div>
+    <h2>Find Me Online</h2>
+    <p class="subtitle">Where you can catch me and join the journey.</p>
+  </div>
+  <div class="connect-grid">
+    <div class="github-spotlight reveal">
+      <div class="gh-icon">🐙</div>
+      <div class="gh-text">
+        <h3>GitHub</h3>
+        <p>All my code, projects, and open-source work live here. From small experiments to full-scale builds.</p>
+        <span class="gh-username">mystry112000</span>
+      </div>
+      <a href="https://github.com/mystry112000" target="_blank" class="btn btn-primary gh-btn">View Profile</a>
+    </div>
+    <div class="discord-spotlight reveal">
+      <div class="dc-icon">💬</div>
+      <div class="dc-text">
+        <h3>Discord</h3>
+        <p>My main hangout. Gaming sessions, dev talk, or just vibing — hit me up anytime.</p>
+        <span class="dc-username">@adamentk_knight_07_89371</span>
+      </div>
+      <a href="https://discord.com/users/adamentk_knight_07_89371" target="_blank" class="btn btn-secondary dc-btn">Add on Discord</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="reveal">
+    <div class="section-label">Testimonials</div>
+    <h2>What People Say</h2>
+    <p class="subtitle">Some kind words from the people I've crossed paths with.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <p>"Super chill dude and an absolute beast when it comes to getting things done. Always bringing good energy to the table."</p>
+      <div class="testimonial-author">
+        <div class="avatar">K</div>
+        <div><div class="name">Kai</div><div class="handle">@kaivibes</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <p>"Adhithya's creativity is next level. Whether it's code or content, he always finds a way to make it hit different."</p>
+      <div class="testimonial-author">
+        <div class="avatar">S</div>
+        <div><div class="name">Sara</div><div class="handle">@sara_creates</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <p>"One of the most real people I know. No ego, just pure passion for what he does. Mad respect."</p>
+      <div class="testimonial-author">
+        <div class="avatar">R</div>
+        <div><div class="name">Raj</div><div class="handle">@raj_codes</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="reveal">
+    <div class="section-label">Contact</div>
+    <h2>Let's Connect</h2>
+    <p class="subtitle">Got a question, a collab idea, or just want to say hi? Drop a message.</p>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <h3>Send Me a Message</h3>
+      <p>Fill out the form and I'll get back to you as soon as possible. Or find me directly on my socials.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/_.itz_adhithya._/" target="_blank" title="Instagram">📷</a>
+        <a href="https://github.com/mystry112000" target="_blank" title="GitHub">🐙</a>
+        <a href="https://discord.com/users/adamentk_knight_07_89371" target="_blank" title="Discord">💬</a>
+      </div>
+    </div>
+    <form class="reveal" id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/_.itz_adhithya._/" target="_blank" class="footer-badge ig">📷 Instagram</a>
+    <a href="https://github.com/mystry112000" target="_blank" class="footer-badge gh">🐙 GitHub — mystry112000</a>
+    <a href="https://discord.com/users/adamentk_knight_07_89371" target="_blank" class="footer-badge dc">💬 Discord — adamentk_knight_07_89371</a>
+  </div>
+  <p>&copy; 2025 Adhithya J. Built with passion.</p>
+</footer>
+
+<script>
+  // Hamburger
+  function toggleNav() { document.getElementById('navLinks').classList.toggle('open') }
+  function closeNav() { document.getElementById('navLinks').classList.remove('open') }
+
+  // Typing effect
+  const lines = [
+    "Creator. Gamer. Developer. I build things, break things, and vibe through the chaos.",
+    "Code. Chill. Repeat. This is my corner of the internet.",
+    "Leveling up in life, one project at a time."
+  ]
+  let lineIdx = 0, charIdx = 0, isDeleting = false
+  const el = document.querySelector('#typing-text span')
+  function typeLoop() {
+    const current = lines[lineIdx]
+    if (!isDeleting) {
+      el.textContent = current.substring(0, charIdx + 1)
+      charIdx++
+      if (charIdx === current.length) { isDeleting = true; setTimeout(typeLoop, 2500); return }
+    } else {
+      el.textContent = current.substring(0, charIdx - 1)
+      charIdx--
+      if (charIdx === 0) { isDeleting = false; lineIdx = (lineIdx + 1) % lines.length }
+    }
+    setTimeout(typeLoop, isDeleting ? 30 : 60)
+  }
+  typeLoop()
+
+  // Scroll reveal
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+  }, { threshold: 0.1 }).observe(document.querySelector('.hero'))
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+  }, { threshold: 0.1 })
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target
+        const target = parseInt(el.dataset.target)
+        let current = 0
+        const step = Math.ceil(target / 60)
+        const interval = setInterval(() => {
+          current += step
+          if (current >= target) { current = target; clearInterval(interval) }
+          el.textContent = current + (target > 50 ? '+' : '')
+        }, 25)
+        counterObserver.unobserve(el)
+      }
+    })
+  }, { threshold: 0.5 })
+  document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el))
+
+  // Particles
+  const container = document.getElementById('particles')
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div')
+    p.className = 'particle'
+    p.style.left = Math.random() * 100 + '%'
+    p.style.width = p.style.height = (Math.random() * 3 + 2) + 'px'
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's'
+    p.style.animationDelay = (Math.random() * 15) + 's'
+    container.appendChild(p)
+  }
+
+  // Form handler
+  const form = document.getElementById('contactForm')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const btn = form.querySelector('button')
+    btn.textContent = 'Sending...'
+    btn.disabled = true
+    const toast = document.getElementById('toast')
+    try {
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+    } catch {}
+    toast.textContent = 'Thanks! Your message was sent.'
+    toast.className = 'toast show'
+    setTimeout(() => toast.className = 'toast', 4000)
+    form.reset()
+    btn.textContent = 'Send Message'
+    btn.disabled = false
+  })
+</script>
+</body>
+</html>

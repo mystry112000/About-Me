@@ -47,7 +47,7 @@
 
     /* Hero */
     .hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center;
       text-align: center; padding: 2rem; padding-top: 80px;
     }
     .hero-content { max-width: 720px; }
@@ -442,6 +442,10 @@
 </footer>
 
 <script>
+  // Force scroll to top on load (fixes mobile hash restore issue)
+  window.scrollTo(0, 0)
+  if (window.location.hash) history.replaceState(null, '', window.location.pathname)
+
   // Hamburger
   function toggleNav() { document.getElementById('navLinks').classList.toggle('open') }
   function closeNav() { document.getElementById('navLinks').classList.remove('open') }

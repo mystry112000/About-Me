@@ -138,7 +138,6 @@
 │   ┌─────────────────────────────────────────────────────────────────────┐   │
 │   │                                                                     │   │
 │   │   🌐  Live Site  →  https://mystry112000.github.io/About-Me        │   │
-│   │   📷  Instagram  →  https://www.instagram.com/_.itz_adhithya._/    │   │
 │   │   🐙  GitHub     →  https://github.com/mystry112000                 │   │
 │   │   💬  Discord    →  adamentk_knight_07_89371                       │   │
 │   │                                                                     │   │
